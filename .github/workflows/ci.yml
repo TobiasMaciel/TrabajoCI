@@ -1,6 +1,12 @@
 name: CI Pipeline
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -22,11 +28,8 @@ jobs:
         run: npm test
 
       - name: Notify Slack
-        if: failure()
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
         env:
           SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
-
-

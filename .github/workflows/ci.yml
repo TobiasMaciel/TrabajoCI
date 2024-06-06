@@ -45,7 +45,6 @@ jobs:
         if: failure()
         uses: 8398a7/action-slack@v3
         with:
-          icon_emoji: 
           text: No se lograron pasar los test
           status: ${{ job.status }}
           fields: repo,commit,author,job,eventName,

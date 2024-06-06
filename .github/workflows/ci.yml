@@ -28,7 +28,7 @@ jobs:
         run: npm install
            
       - name: Run tests
-        run: npx test -- --verbose # Añadir la opción --verbose para más detalles
+        run: npx test
 
       - name: Notificar al Slack que salio bien
         if: success()

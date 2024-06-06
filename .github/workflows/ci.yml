@@ -21,8 +21,10 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Set executable permissions for node modules
-        run: chmod +x node_modules/.bin/jest
+      - name: Clean install dependencies
+        run: |
+          rm -rf node_modules
+          npm install
            
       - name: Run tests
         run: npx jest

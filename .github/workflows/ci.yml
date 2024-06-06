@@ -12,6 +12,9 @@ jobs:
   test:
     name: Chequeo de codigo, test y notificaciones de Slack
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,7 +22,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20 #No anda con esta version 20.x
+          node-version: ${{ matrix.node-version }} #No anda con esta version 20.x
 
       - name: Install dependencies
         run: npm install

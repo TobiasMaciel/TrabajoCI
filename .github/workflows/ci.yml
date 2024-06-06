@@ -37,6 +37,7 @@ jobs:
         with:
           text: Test pasados con exito!
           status: ${{ job.status }}
+          fields: repo,commit,author,job,eventName
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -44,8 +45,10 @@ jobs:
         if: failure()
         uses: 8398a7/action-slack@v3
         with:
+          icon_emoji: 
           text: No se lograron pasar los test
           status: ${{ job.status }}
+          fields: repo,commit,author,job,eventName,
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         

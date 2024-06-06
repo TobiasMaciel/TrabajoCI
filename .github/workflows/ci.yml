@@ -33,6 +33,8 @@ jobs:
   notificacion:
     name: notificaciones de Slack
     runs-on: ubuntu-latest
+    needs: test
+    if: always()
     strategy:
       matrix:
         node-version: [14]

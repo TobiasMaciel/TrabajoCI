@@ -27,10 +27,21 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Deploy to Render
+        if: success() # Este paso solo se ejecutará si los tests son exitosos
+        run: |
+          curl -X POST "https://api.render.com/deploy/srv-cpfne37109ks73bnsccg?key=jnQgfSOiqgI"
+
       - name: Notify Slack
-        # if: failure()
+        if: always() # Ejecutar siempre para poder evaluar el estado del trabajo
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
+          fields: custom_message
         env:
-          SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          CUSTOM_MESSAGE: ${{ steps.notify.outcome == 'success' && 'Todo salió bien' || 'Todo salió mal' }}
+
+      - name: Set Slack Notification Message
+        id: notify
+        run: echo "CUSTOM_MESSAGE=${{ steps.notify.outcome == 'success' && 'Todo salió bien' || 'Todo salió mal' }}"

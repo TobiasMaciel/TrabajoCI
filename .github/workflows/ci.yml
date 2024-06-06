@@ -31,6 +31,7 @@ jobs:
         if: success()
         uses: 8398a7/action-slack@v3
         with:
+          icon_emoji: ":white_check_mark:"
           text: Test pasados con exito!
           status: ${{ job.status }}
         env:
@@ -40,6 +41,7 @@ jobs:
         if: failure()
         uses: 8398a7/action-slack@v3
         with:
+          icon_emoji: ":no_entry:"
           text: No se lograron pasar los test
           status: ${{ job.status }}
         env:

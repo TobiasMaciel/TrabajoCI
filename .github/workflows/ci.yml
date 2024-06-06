@@ -37,7 +37,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          fields: custom_message
+          fields: CUSTOM_MESSAGE
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           CUSTOM_MESSAGE: ${{ steps.notify.outcome == 'success' && 'Todo salió bien' || 'Todo salió mal' }}
@@ -45,3 +45,4 @@ jobs:
       - name: Set Slack Notification Message
         id: notify
         run: echo "CUSTOM_MESSAGE=${{ steps.notify.outcome == 'success' && 'Todo salió bien' || 'Todo salió mal' }}"
+#No anda las notificaciones

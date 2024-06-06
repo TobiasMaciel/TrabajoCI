@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    name: Chequeo de codigo, test y notificaciones de Slack
+    name: Chequeo de codigo y test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,21 +26,16 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
+           
       - name: Run tests
         run: npm test
 
-  notificacion:
-    name: notificaciones de Slack
+  notificar_slack_exito:
+    name: Notificar al Slack que salio bien
     runs-on: ubuntu-latest
-    needs: test
-    if: always()
-    strategy:
-      matrix:
-        node-version: [14]
+    if: success()
     steps:
-      - name: Notificar al Slack que salio bien
-        if: success()
+      - name: Notificar al Slack
         uses: 8398a7/action-slack@v3
         with:
           icon_emoji: ":white_check_mark:"
@@ -49,11 +44,35 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Notificar al Slack que salio mal
-        if: failure()
+  notificar_slack_fallo:
+    name: Notificar al Slack que salio mal
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+      - name: Notificar al Slack
         uses: 8398a7/action-slack@v3
         with:
           text: ":no_entry: No se lograron pasar los test"
           status: ${{ job.status }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  deploy_render:
+    name: Despliegue en Render
+    runs-on: ubuntu-latest
+    needs: test
+    if: always()
+    steps:
+      - name: Desplegar en Render
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" -X POST "https://api.render.com/deploy/srv-cpfne37109ks73bnsccg?key=jnQgfSOiqgI")
+          if [ $response -eq 200 ]; then
+            echo "Deployment successful"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"Deploy exitoso."}' $SLACK_WEBHOOK_URL
+          else
+            echo "Deployment failed with HTTP status code $response"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"¡Ha fallado el Deploy!"}' "$SLACK_WEBHOOK_URL"
+            exit 1
+          fi
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

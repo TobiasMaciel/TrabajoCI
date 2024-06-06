@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    name: Chequeo de codigo, test y notificaciones de Slack
+    name: Chequeo de código, test y notificaciones de Slack
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -20,25 +20,40 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "20"
-           
-      - name: Run tests
-        run: npx jest
 
-      - name: Notificar al Slack que salio bien
+      - name: Install dependencies
+        run: npm install
+
+      - name: Verify Node and npm version
+        run: |
+          node -v
+          npm -v
+
+      - name: List files
+        run: ls -al
+
+      - name: Run tests
+        run: npm test
+
+      - name: Notificar al Slack que salió bien
         if: success()
         uses: 8398a7/action-slack@v3
         with:
           icon_emoji: ":white_check_mark:"
-          text: ":white_check_mark: Test pasados con exito!"
+          text: ":white_check_mark: ¡Tests pasados con éxito!"
           status: ${{ job.status }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Notificar al Slack que salio mal
+      - name: Notificar al Slack que salió mal
         if: failure()
         uses: 8398a7/action-slack@v3
         with:
-          text: ":no_entry: No se lograron pasar los test"
+          text: ":no_entry: No se lograron pasar los tests"
           status: ${{ job.status }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          
+      - name: Debug information
+        if: failure()
+        run: dmesg

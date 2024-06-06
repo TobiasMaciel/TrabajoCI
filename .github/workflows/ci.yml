@@ -12,9 +12,6 @@ jobs:
   test:
     name: Chequeo de codigo, test y notificaciones de Slack
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -22,13 +19,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }} #No anda con esta version 20.x
+          node-version: "20"
 
-      - name: Install dependencies
-        run: npm install
+      - name: Set executable permissions for node modules
+        run: chmod +x node_modules/.bin/jest
            
       - name: Run tests
-        run: npm test -- --verbose # Añadir la opción --verbose para más detalles
+        run: npx jest
 
       - name: Notificar al Slack que salio bien
         if: success()

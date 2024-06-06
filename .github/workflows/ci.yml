@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [14]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -22,14 +22,21 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }} #No anda con esta version 20.x
+          node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
         run: npm install
            
       - name: Run tests
-        run: npx test
+        run: npm test
 
+  notificacion:
+    name: notificaciones de Slack
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14]
+    steps:
       - name: Notificar al Slack que salio bien
         if: success()
         uses: 8398a7/action-slack@v3
@@ -48,3 +55,12 @@ jobs:
           status: ${{ job.status }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+workflows:
+  version: 2
+  build_and_deploy:
+      jobs:
+        - test:
+        - notificacion:
+            requires:
+              - test

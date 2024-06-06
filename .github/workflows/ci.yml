@@ -33,6 +33,7 @@ jobs:
   notificar_slack_exito:
     name: Notificar al Slack que salio bien
     runs-on: ubuntu-latest
+    needs: test
     if: success()
     steps:
       - name: Notificar al Slack
@@ -47,6 +48,7 @@ jobs:
   notificar_slack_fallo:
     name: Notificar al Slack que salio mal
     runs-on: ubuntu-latest
+    needs: test
     if: failure()
     steps:
       - name: Notificar al Slack
@@ -61,7 +63,6 @@ jobs:
     name: Despliegue en Render
     runs-on: ubuntu-latest
     needs: test
-    if: always()
     steps:
       - name: Desplegar en Render
         run: |

@@ -26,13 +26,14 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-           
+
       - name: Run tests
         run: npm test
 
   notificacion:
     name: notificaciones de Slack
     runs-on: ubuntu-latest
+    needs: test
     strategy:
       matrix:
         node-version: [14]
@@ -55,12 +56,3 @@ jobs:
           status: ${{ job.status }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-workflows:
-  version: 2
-  build_and_deploy:
-      jobs:
-        - test:
-        - notificacion:
-            requires:
-              - test

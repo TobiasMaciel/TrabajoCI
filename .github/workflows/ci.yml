@@ -32,7 +32,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           icon_emoji: ":white_check_mark:"
-          text: Test pasados con exito!
+          text: ":white_check_mark: Test pasados con exito!"
           status: ${{ job.status }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -41,8 +41,7 @@ jobs:
         if: failure()
         uses: 8398a7/action-slack@v3
         with:
-          icon_emoji: ":no_entry:"
-          text: No se lograron pasar los test
+          text: ":no_entry: No se lograron pasar los test"
           status: ${{ job.status }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    name: Chequeo de codigo y test
+    name: Chequeo de codigo, test y notificaciones de Slack
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: "20.x"
 
       - name: Install dependencies
         run: npm install
@@ -27,16 +27,13 @@ jobs:
       - name: Run tests
         run: npm test
 
-  slack:
-    name: Notificaciones al Slack
-    runs-on: ubuntu-latest
-    steps:
       - name: Notificar al Slack que salio bien
         if: success()
         uses: 8398a7/action-slack@v3
         with:
           text: Test pasados con exito!
           status: ${{ job.status }}
+          fields: repo,commit,job,author,took,eventName
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -46,6 +43,7 @@ jobs:
         with:
           text: No se lograron pasar los test
           status: ${{ job.status }}
+          fields: repo,commit,job,author,took,eventName
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         

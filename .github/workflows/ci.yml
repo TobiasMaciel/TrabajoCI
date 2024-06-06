@@ -9,40 +9,47 @@ on:
       - main
 
 jobs:
-  build:
+  test:
+    name: Chequeo de codigo y test
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: "14"
 
       - name: Install dependencies
         run: npm install
-
+           
       - name: Run tests
         run: npm test
 
-      - name: Deploy to Render
-        if: success() # Este paso solo se ejecutará si los tests son exitosos
-        run: |
-          curl -X POST "https://api.render.com/deploy/srv-cpfne37109ks73bnsccg?key=jnQgfSOiqgI"
-
-      - name: Notify Slack
-        if: always() # Ejecutar siempre para poder evaluar el estado del trabajo
+  slack:
+    name: Notificaciones al Slack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notificar al Slack que salio bien
+        if: success()
         uses: 8398a7/action-slack@v3
         with:
+          text: Test pasados con exito!
           status: ${{ job.status }}
-          fields: CUSTOM_MESSAGE
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          CUSTOM_MESSAGE: ${{ steps.notify.outcome == 'success' && 'Todo salió bien' || 'Todo salió mal' }}
 
-      - name: Set Slack Notification Message
-        id: notify
-        run: echo "CUSTOM_MESSAGE=${{ steps.notify.outcome == 'success' && 'Todo salió bien' || 'Todo salió mal' }}"
-#No anda las notificaciones
+      - name: Notificar al Slack que salio mal
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          text: No se lograron pasar los test
+          status: ${{ job.status }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        
+        
+      
+
+

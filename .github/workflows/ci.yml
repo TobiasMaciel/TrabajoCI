@@ -33,7 +33,6 @@ jobs:
         with:
           text: Test pasados con exito!
           status: ${{ job.status }}
-          fields: repo,commit,job,author,took,eventName
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -43,7 +42,6 @@ jobs:
         with:
           text: No se lograron pasar los test
           status: ${{ job.status }}
-          fields: repo,commit,job,author,took,eventName
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         

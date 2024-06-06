@@ -20,11 +20,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "20"
-
-      - name: Clean install dependencies
-        run: |
-          rm -rf node_modules
-          npm install
            
       - name: Run tests
         run: npx jest

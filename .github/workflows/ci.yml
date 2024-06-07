@@ -19,7 +19,6 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
-          GLOB_PATTERNS: "index.html script.js styles.css"
           FILTER_REGEX_EXCLUDE: "node_modules/"
 
   test:

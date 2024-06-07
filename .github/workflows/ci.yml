@@ -19,7 +19,8 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
-          FILTER_REGEX_INCLUDE: ".*(index.html|script.js|styles.css)$"
+          GLOB_PATTERNS: "index.html script.js styles.css"
+          FILTER_REGEX_EXCLUDE: "node_modules/"
 
   test:
     name: Chequeo de codigo y test

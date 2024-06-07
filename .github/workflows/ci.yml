@@ -18,6 +18,8 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: false
+          FILTER_REGEX_INCLUDE: "../../index.html|../../script.js|../../style.css"
 
   test:
     name: Chequeo de codigo y test

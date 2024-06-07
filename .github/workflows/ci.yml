@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Run Super Linter
         uses: github/super-linter@v4
@@ -19,9 +21,6 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
-          FILTER_REGEX_INCLUDE: '.*index\.html$'
-          DISABLE_LINTERS: 'ALL'
-          ENABLE_LINTERS: 'HTML'
 
   test:
     name: Chequeo de codigo y test

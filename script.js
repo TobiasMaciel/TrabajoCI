@@ -1,5 +1,4 @@
 function sum(a, b) {
-  const c = b;
   return a + b;
 }
 

@@ -97,7 +97,7 @@ jobs:
             curl -X POST -H 'Content-type: application/json' --data '{"channel":"C075WTNHGJX","text":"Deploy exitoso."}' https://slack.com/api/chat.postMessage?token=$SLACK_WEBHOOK_URL
           else
             echo "Deployment failed with HTTP status code $response"
-            curl -X POST -H 'Content-type: application/json' --data '{"channel":"C075WTNHGJX","text":"¡Ha fallado el Deploy!"}' https://slack.com/api/chat.postMessage?token=xoxb-7200984119650-7201067458802-C6q4z6xIseAymRzfjNxuNse7
+            curl -X POST -H 'Content-type: application/json' --data '{"channel":"C075WTNHGJX","text":"¡Ha fallado el Deploy!"}' https://slack.com/api/chat.postMessage?token=$xoxb-7200984119650-7201067458802-C6q4z6xIseAymRzfjNxuNse7
             exit 1
           fi
 

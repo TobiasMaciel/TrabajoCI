@@ -53,8 +53,11 @@ jobs:
       - name: Notificar al Slack
         uses: 8398a7/action-slack@v3
         with:
-          icon_emoji: ":white_check_mark:"
-          text: ":white_check_mark: Test pasados con exito!"
+          
+          text: >
+            :white_check_mark: Test pasados con éxito!
+            *Usuario:* ${{ github.actor }}
+            *Mensaje del commit:* ${{ github.event.head_commit.message }}
           status: ${{ job.status }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -68,7 +71,10 @@ jobs:
       - name: Notificar al Slack
         uses: 8398a7/action-slack@v3
         with:
-          text: ":no_entry: No se lograron pasar los test"
+          text: >
+            :no_entry: No se lograron pasar los test
+            *Usuario:* ${{ github.actor }}
+            *Mensaje del commit:* ${{ github.event.head_commit.message }}
           status: ${{ job.status }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

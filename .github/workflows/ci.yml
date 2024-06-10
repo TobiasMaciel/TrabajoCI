@@ -10,9 +10,6 @@ jobs:
     name: Linter de Código
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - run: npm install
       - run: npx eslint -c linters/eslint.config.js
 

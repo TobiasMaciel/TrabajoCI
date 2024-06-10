@@ -1,4 +1,5 @@
 function sum(a, b) {
+  console.log(a)
   if (!isNaN(a) && !isNaN(b)) {
     return a + b;
   } else {

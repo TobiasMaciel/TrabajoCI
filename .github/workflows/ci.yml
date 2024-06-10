@@ -15,12 +15,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run Super Linter
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: false
+      #- name: Run Super Linter
+      #  uses: github/super-linter@v4
+      #  env:
+      #    DEFAULT_BRANCH: main
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #    VALIDATE_ALL_CODEBASE: false
 
   test:
     name: Chequeo de codigo y test

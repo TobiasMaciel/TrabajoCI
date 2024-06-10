@@ -1,5 +1,9 @@
 function sum(a, b) {
-  return a + b;
+  if (!isNaN(a) && !isNaN(b)) {
+    return a + b;
+  } else {
+    return "Se deben ingresar números.";
+  }
 }
 
 function calculateSum() {

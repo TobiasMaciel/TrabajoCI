@@ -20,9 +20,8 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINTER_RULES_PATH: linter
           VALIDATE_ALL_CODEBASE: false
-          LINTER_RULES_PATH: ../../Linter
-
 
   test:
     name: Chequeo de codigo y test
@@ -55,7 +54,6 @@ jobs:
       - name: Notificar al Slack
         uses: 8398a7/action-slack@v3
         with:
-          
           text: >
             :white_check_mark: Test pasados con éxito!
             *Usuario:* ${{ github.actor }}

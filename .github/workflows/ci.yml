@@ -94,10 +94,10 @@ jobs:
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST "https://api.render.com/deploy/srv-cpfne37109ks73bnsccg?key=jnQgfSOiqgI")
           if [ $response -eq 200 ]; then
             echo "Deployment successful"
-            curl -X POST -H 'Content-type: application/json' --data '{"channel":"C075WTNHGJX","text":"Deploy exitoso."}' https://slack.com/api/chat.postMessage?token=$SLACK_WEBHOOK_URL
+            curl -X POST -H 'Content-type: application/json' --data '{"channel":"C075WTNHGJX","text":"Deploy exitoso."}' https://slack.com/api/chat.postMessage?token=xoxb-7200984119650-7201067458802-C6q4z6xIseAymRzfjNxuNse7
           else
             echo "Deployment failed with HTTP status code $response"
-            curl -X POST -H 'Content-type: application/json' --data '{"channel":"C075WTNHGJX","text":"¡Ha fallado el Deploy!"}' https://slack.com/api/chat.postMessage?token=$xoxb-7200984119650-7201067458802-C6q4z6xIseAymRzfjNxuNse7
+            curl -X POST -H 'Content-type: application/json' --data '{"channel":"C075WTNHGJX","text":"¡Ha fallado el Deploy!"}' https://slack.com/api/chat.postMessage?token=xoxb-7200984119650-7201067458802-C6q4z6xIseAymRzfjNxuNse7
             exit 1
           fi
 

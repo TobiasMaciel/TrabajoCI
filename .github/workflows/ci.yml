@@ -13,14 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Instalar paquetes
-        run: npm install
-      
-      - name: Run ESLint
-        run: npm run lint:js
-  
-      - name: Run HTMLHint
-        run: npm run lint:html
+      - run: npm install
+      - run: npm run lint:js
+      - run: npm run lint:html
 
   test:
     name: Se ejecutan los test

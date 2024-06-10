@@ -83,3 +83,24 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
+  deploy_render:
+    name: Despliegue en Render
+    runs-on: ubuntu-latest
+    needs: test
+    if: success()
+    steps:
+      - name: Desplegar en Render
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" -X POST "https://api.render.com/deploy/srv-cpfne37109ks73bnsccg?key=jnQgfSOiqgI")
+          if [ $response -eq 200 ]; then
+            echo "Deployment successful"
+            curl -X POST -H 'Content-type: application/json' --data '{"channel":"C075GCJB91D","text":"Deploy exitoso."}' https://slack.com/api/chat.postMessage?token=$SLACK_TOKEN
+          else
+            echo "Deployment failed with HTTP status code $response"
+            curl -X POST -H 'Content-type: application/json' --data '{"channel":"C075GCJB91D","text":"¡Ha fallado el Deploy!"}' https://slack.com/api/chat.postMessage?token=$SLACK_TOKEN
+            exit 1
+          fi
+
+        env:
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+

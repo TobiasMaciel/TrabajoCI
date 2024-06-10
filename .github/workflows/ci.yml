@@ -19,7 +19,7 @@ jobs:
           node-version: 14
 
       - run: npm install
-      - run: npx eslint -c linters/eslint.config.js
+      - run: npm run lint:js
 
   test:
     name: Se ejecutan los test

@@ -12,19 +12,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Run Super Linter
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: false
-          LINTER_RULES_PATH: linters  
+      
+      - name: Run ESLint
+        run: npm run lint:js
+  
+      - name: Run HTMLHint
+        run: npm run lint:html
 
   test:
-    name: Chequeo de codigo y test
+    name: Se ejecutan los test
     runs-on: ubuntu-latest
     needs: lint
     strategy:

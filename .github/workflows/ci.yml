@@ -20,7 +20,7 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LINTER_RULES_PATH: linter
+          FILES: ../../index.html
           VALIDATE_ALL_CODEBASE: false
 
   test:

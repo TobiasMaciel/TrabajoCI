@@ -2,7 +2,11 @@
     "extends": "eslint:recommended",
     "rules": {
       "no-unused-vars": "warn",
-      "no-console": "warn"
+      "no-console": "warn",
+      "no-debugger": "error",
+      "space-before-function-paren": "warn",
+      "quotes": ["warn", "single"],
+      "semi": ["warn", "never"]
     }
   }
   

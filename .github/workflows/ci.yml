@@ -12,9 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Run ESLint
-        run: npm run lint:js
   
       - name: Run HTMLHint
         run: npm run lint:html

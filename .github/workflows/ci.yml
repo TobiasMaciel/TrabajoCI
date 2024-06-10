@@ -21,10 +21,7 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
-          LINTER_RULES_PATH: linters  # Asegúrate de que esta ruta es correcta
-          # Para mostrar solo advertencias y no errores fatales:
-          LINTER_DISPLAY_NAME: "Super Linter"
-          RUN_LOCAL: true
+          LINTER_RULES_PATH: linters  
 
   test:
     name: Chequeo de codigo y test

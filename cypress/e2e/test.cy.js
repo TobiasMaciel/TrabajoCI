@@ -11,7 +11,7 @@ describe('Suma de dos números', () => {
       cy.get('button').click();
   
       // Verificamos el resultado
-      cy.get('#result').should('have.text', 'Resultado: 7');
+      cy.get('#resultado').should('have.text', 'Resultado: 7');
     });
   
     it('debería mostrar un error si no se ingresan números', () => {
@@ -19,6 +19,6 @@ describe('Suma de dos números', () => {
       cy.get('button').click();
   
       // Verificamos que el resultado sea un mensaje de error o un valor por defecto
-      cy.get('#result').should('have.text', 'Resultado: Se deben ingresar números.');
+      cy.get('#resultado').should('have.text', 'Resultado: Se deben ingresar números.');
     });
   });

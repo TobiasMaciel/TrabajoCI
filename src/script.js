@@ -1,10 +1,4 @@
-function sum(a, b) {
-  if (!isNaN(a) && !isNaN(b)) {
-    return a + b;
-  } else {
-    return "Se deben ingresar números.";
-  }
-}
+/* global sum */
 
 function calcularSuma() {
   const num1 = parseFloat(document.getElementById("num1").value);
@@ -13,5 +7,4 @@ function calcularSuma() {
   document.getElementById("resultado").innerText = "Resultado: " + result;
 }
 
-module.exports = sum;
-window.calcularSuma = calcularSuma
+window.calcularSuma = calcularSuma;

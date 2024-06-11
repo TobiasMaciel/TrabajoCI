@@ -6,7 +6,7 @@ function sum(a, b) {
   }
 }
 
-function calculateSum() {
+function calcularSuma() {
   const num1 = parseFloat(document.getElementById("num1").value);
   const num2 = parseFloat(document.getElementById("num2").value);
   const result = sum(num1, num2);
@@ -14,3 +14,4 @@ function calculateSum() {
 }
 
 module.exports = sum;
+window.calcularSuma = calcularSuma

@@ -14,7 +14,6 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@cypress/webpack-batteries-included-preprocessor": "^3.0.3",
     "cypress": "^13.11.0",
     "eslint": "^9.4.0",
     "htmlhint": "^1.1.4",

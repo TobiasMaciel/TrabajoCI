@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencias
+      - name: Instalar dependencias
         run: npm install
       
       - name: Correr linter de JS
@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencias
+      - name: Instalar dependencias
         run: npm install
            
       - name: Run tests
@@ -103,4 +103,22 @@ jobs:
 
         env:
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+      
+  test_deploy:
+    name: Testear el deploy
+    runs-on: ubuntu-latest
+    needs: deploy_render
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      - name: Setear Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar Cypress
+        run: npm run cypress:run

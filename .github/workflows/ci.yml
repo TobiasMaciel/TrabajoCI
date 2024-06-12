@@ -120,6 +120,7 @@ jobs:
           curl -X POST -H 'Content-type: application/json' --data '{"text":"Deploy exitoso."}' "$SLACK_WEBHOOK_DEPLOYS"
           echo "Deployment completed successfully."
         env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
           SLACK_WEBHOOK_DEPLOYS: ${{ secrets.SLACK_WEBHOOK_DEPLOYS }}
 
   test_deploy:

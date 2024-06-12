@@ -46,7 +46,7 @@ jobs:
       - name: Instalar dependencias
         run: npm install
            
-      - name: Run tests
+      - name: Correr los test de Jest
         run: npm run jest
 
       - name: SonarCloud Scan

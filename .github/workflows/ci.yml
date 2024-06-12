@@ -95,6 +95,7 @@ jobs:
           if [ $response -eq 200 ]; then
             echo "Deployment successful"
             curl -X POST -H 'Content-type: application/json' --data '{"text":"Deploy iniciado correctamente."}' "$SLACK_WEBHOOK_DEPLOYS"
+            exit 0
           else
             echo "Deployment failed with HTTP status code $response"
             curl -X POST -H 'Content-type: application/json' --data '{"text":"¡Ha fallado el Deploy!"}' "$SLACK_WEBHOOK_DEPLOYS"

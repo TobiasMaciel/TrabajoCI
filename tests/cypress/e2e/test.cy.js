@@ -6,7 +6,7 @@ describe('Suma de dos números', () => {
   
     it('Suma de dos numeros enteros', () => {
       // Seleccionamos los inputs y el botón, luego interactuamos con ellos
-      cy.get('#num1').type('3');
+      cy.get('#num1').type('2');
       cy.get('#num2').type('5');
       cy.get('button').click();
   

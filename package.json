@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "script.js",
   "scripts": {
-    "test": "jest",
+    "jest": "jest",
     "lint:js": "eslint -c linters/eslint.config.js",
     "lint:html": "htmlhint",
     "cypress:open": "cypress open",

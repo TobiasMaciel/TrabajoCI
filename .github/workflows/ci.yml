@@ -47,7 +47,7 @@ jobs:
         run: npm install
            
       - name: Run tests
-        run: npm test
+        run: npm run jest
 
   notificar_slack_exito:
     name: Notificar al Slack que salio bien
@@ -64,7 +64,7 @@ jobs:
             *Mensaje del commit:* ${{ github.event.head_commit.message }}
           status: ${{ job.status }}
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_COMMITS: ${{ secrets.SLACK_WEBHOOK_COMMITS }}
 
   notificar_slack_fallo:
     name: Notificar al Slack que salio mal
@@ -81,7 +81,7 @@ jobs:
             *Mensaje del commit:* ${{ github.event.head_commit.message }}
           status: ${{ job.status }}
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_COMMITS: ${{ secrets.SLACK_WEBHOOK_COMMITS }}
 
   deploy_render:
     name: Despliegue en Render
@@ -94,15 +94,14 @@ jobs:
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST "https://api.render.com/deploy/srv-cpfne37109ks73bnsccg?key=jnQgfSOiqgI")
           if [ $response -eq 200 ]; then
             echo "Deployment successful"
-            curl -X POST -H 'Content-type: application/json' --data '{"channel":"C075GCJB91D","text":"Deploy exitoso."}' https://slack.com/api/chat.postMessage?token=$SLACK_TOKEN
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"Deploy exitoso."}' "$SLACK_WEBHOOK_DEPLOYS"
           else
             echo "Deployment failed with HTTP status code $response"
-            curl -X POST -H 'Content-type: application/json' --data '{"channel":"C075GCJB91D","text":"¡Ha fallado el Deploy!"}' https://slack.com/api/chat.postMessage?token=$SLACK_TOKEN
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"¡Ha fallado el Deploy!"}' "$SLACK_WEBHOOK_DEPLOYS"
             exit 1
           fi
-
         env:
-          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+          SLACK_WEBHOOK_DEPLOYS: ${{ secrets.SLACK_WEBHOOK_DEPLOYS }}
 
   test_deploy:
     name: Testear el deploy

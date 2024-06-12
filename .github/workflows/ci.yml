@@ -102,27 +102,6 @@ jobs:
             exit 1
           fi
 
-      - name: Despliegue en proceso
-        run:  |
-          deploy_status="pending"
-          while [ "$deploy_status" != "live" ]; do
-            response=$(curl -s -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/srv-cpfne37109ks73bnsccg/deploys")
-            echo "Render API response: $response"
-            deploy_status=$(echo $response | jq -r '.[0].deploy.status') 
-            echo "Current deploy status: $deploy_status"
-            if [ "$deploy_status" == "failed" ]; then
-              echo "Deployment failed."
-              curl -X POST -H 'Content-type: application/json' --data '{"text":"¡Ha fallado el Deploy!"}' "$SLACK_WEBHOOK_DEPLOYS"
-              exit 1
-            fi
-            sleep 5
-          done
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Deploy exitoso."}' "$SLACK_WEBHOOK_DEPLOYS"
-          echo "Deployment completed successfully."
-        env:
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-          SLACK_WEBHOOK_DEPLOYS: ${{ secrets.SLACK_WEBHOOK_DEPLOYS }}
-
   test_deploy:
     name: Testear el deploy
     runs-on: ubuntu-latest

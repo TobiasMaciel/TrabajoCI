@@ -49,11 +49,6 @@ jobs:
       - name: Run tests
         run: npm run jest
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
   notificar_slack_exito:
     name: Notificar al Slack que salio bien
     runs-on: ubuntu-latest

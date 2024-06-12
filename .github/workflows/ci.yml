@@ -89,18 +89,19 @@ jobs:
     needs: test
     if: success()
     steps:
-      - name: Iniciar despliegue
+      - name: Desplegar en Render
         run: |
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST "https://api.render.com/deploy/srv-cpfne37109ks73bnsccg?key=jnQgfSOiqgI")
           if [ $response -eq 200 ]; then
             echo "Deployment successful"
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"Deploy iniciado correctamente."}' "$SLACK_WEBHOOK_DEPLOYS"
-            exit 0
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"Deploy exitoso."}' "$SLACK_WEBHOOK_DEPLOYS"
           else
             echo "Deployment failed with HTTP status code $response"
             curl -X POST -H 'Content-type: application/json' --data '{"text":"¡Ha fallado el Deploy!"}' "$SLACK_WEBHOOK_DEPLOYS"
             exit 1
           fi
+        env:
+          SLACK_WEBHOOK_DEPLOYS: ${{ secrets.SLACK_WEBHOOK_DEPLOYS }}
 
   test_deploy:
     name: Testear el deploy

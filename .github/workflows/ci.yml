@@ -141,7 +141,7 @@ jobs:
             fi
             sleep 5
           done
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ Deploy exitoso."}' "$SLACK_WEBHOOK_DEPLOYS"
+          curl -X POST -H 'Content-type: application/json' --data '{"text":":white_check_mark: Deploy exitoso."}' "$SLACK_WEBHOOK_DEPLOYS"
           echo "Deployment completed successfully."
         env:
           SLACK_WEBHOOK_DEPLOYS: ${{ secrets.SLACK_WEBHOOK_DEPLOYS }}
@@ -173,10 +173,8 @@ jobs:
     if: success()
     steps:
       - name: Notificar al Slack
-        uses: 8398a7/action-slack@v3
-        with:
-          status: success
-          text: ":white_check_mark: Test del deploy pasados con éxito! "
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text"::white_check_mark: Test del deploy pasados con éxito!"}' "$SLACK_WEBHOOK_DEPLOYS"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_DEPLOYS }}
 
@@ -187,9 +185,7 @@ jobs:
     if: failure()
     steps:
       - name: Notificar al Slack
-        uses: 8398a7/action-slack@v3
-        with:
-          status: failure
-          text: ":no_entry: No se lograron pasar los test del deploy."
+        run: | 
+          curl -X POST -H 'Content-type: application/json' --data '{"text":":no_entry: No se lograron pasar los test del deploy."}' "$SLACK_WEBHOOK_DEPLOYS"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_DEPLOYS }}

@@ -94,10 +94,10 @@ jobs:
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST "https://api.render.com/deploy/srv-cpfne37109ks73bnsccg?key=jnQgfSOiqgI")
           if [ $response -eq 200 ]; then
             echo "Deployment successful"
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"Deploy exitoso."}' "$SLACK_WEBHOOK_DEPLOYS"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"⌛️ Iniciando despliegue en Render..."}' "$SLACK_WEBHOOK_DEPLOYS"
           else
             echo "Deployment failed with HTTP status code $response"
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"¡Ha fallado el Deploy!"}' "$SLACK_WEBHOOK_DEPLOYS"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"Ha fallado al iniciar el despliegue en Render!"}' "$SLACK_WEBHOOK_DEPLOYS"
             exit 1
           fi
 
@@ -121,12 +121,12 @@ jobs:
             echo "Current deploy status: $deploy_status"
             if [ "$deploy_status" == "failed" ]; then
               echo "Deployment failed."
-              curl -X POST -H 'Content-type: application/json' --data '{"text":"¡Ha fallado el Deploy!"}' "$SLACK_WEBHOOK_DEPLOYS"
+              curl -X POST -H 'Content-type: application/json' --data '{"text":"❌ Ha fallado el Deploy!"}' "$SLACK_WEBHOOK_DEPLOYS"
               exit 1
             fi
             sleep 5
           done
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Deploy exitoso."}' "$SLACK_WEBHOOK_DEPLOYS"
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ Deploy exitoso."}' "$SLACK_WEBHOOK_DEPLOYS"
           echo "Deployment completed successfully."
         env:
           SLACK_WEBHOOK_DEPLOYS: ${{ secrets.SLACK_WEBHOOK_DEPLOYS }}

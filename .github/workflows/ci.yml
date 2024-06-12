@@ -54,7 +54,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       
-      - name: Check SonarCloud Quality Gate
+      - name: Chequeo del Quality Gate 
         run: |
           SONAR_STATUS=$(curl -s -u ${{ secrets.SONAR_TOKEN }}: "https://sonarcloud.io/api/qualitygates/project_status?projectKey=TobiasMaciel_TrabajoCI" | jq -r '.projectStatus.status')
           if [ "$SONAR_STATUS" != "OK" ]; then

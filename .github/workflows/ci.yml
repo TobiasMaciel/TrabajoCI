@@ -64,7 +64,7 @@ jobs:
             *Mensaje del commit:* ${{ github.event.head_commit.message }}
           status: ${{ job.status }}
         env:
-          SLACK_WEBHOOK_COMMITS: ${{ secrets.SLACK_WEBHOOK_COMMITS }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_COMMITS }}
 
   notificar_slack_fallo:
     name: Notificar al Slack que salio mal
@@ -81,7 +81,7 @@ jobs:
             *Mensaje del commit:* ${{ github.event.head_commit.message }}
           status: ${{ job.status }}
         env:
-          SLACK_WEBHOOK_COMMITS: ${{ secrets.SLACK_WEBHOOK_COMMITS }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_COMMITS }}
 
   deploy_render:
     name: Despliegue en Render

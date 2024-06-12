@@ -1,5 +1,5 @@
 (module.exports = {
-  files: ["**/*.js"],
+  files: ["src/**/*.js"],
   languageOptions: {
     ecmaVersion: 2021,
     sourceType: "module",
@@ -16,7 +16,7 @@
   },
 }),
   {
-    files: ["test/test.js"], // Ajusta la ruta a tus archivos de prueba
+    files: ["test/**/*.js"], // Ajusta la ruta a tus archivos de prueba
     languageOptions: {
       globals: {
         describe: "readonly",

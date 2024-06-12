@@ -64,8 +64,8 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  notificar_slack_exito:
-    name: Notificar al Slack que salio bien
+  notificar_slack_exito_jest:
+    name: Notificar al Slack que salio bien Jest y Sonar
     runs-on: ubuntu-latest
     needs: test
     if: success()
@@ -74,15 +74,15 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           text: >
-            :white_check_mark: Test pasados con éxito!
+            :white_check_mark: Test de Jest y coverage de Sonar Cloud pasados con éxito!
             *Usuario:* ${{ github.actor }}
             *Mensaje del commit:* ${{ github.event.head_commit.message }}
           status: ${{ job.status }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_COMMITS }}
 
-  notificar_slack_fallo:
-    name: Notificar al Slack que salio mal
+  notificar_slack_fallo_jest:
+    name: Notificar al Slack que salio mal Jest o Sonar
     runs-on: ubuntu-latest
     needs: test
     if: failure()
@@ -91,7 +91,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           text: >
-            :no_entry: No se lograron pasar los test
+            :no_entry: No se lograron pasar los test de Jest o el coverage de Sonar Cloud
             *Usuario:* ${{ github.actor }}
             *Mensaje del commit:* ${{ github.event.head_commit.message }}
           status: ${{ job.status }}
@@ -165,3 +165,37 @@ jobs:
 
       - name: Ejecutar Cypress
         run: npm run cypress:run
+  
+  notificar_slack_exito_cypress:
+    name: Notificar al Slack que salio bien
+    runs-on: ubuntu-latest
+    needs: test_deploy
+    if: success()
+    steps:
+      - name: Notificar al Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          text: >
+            :white_check_mark: Test del deploy pasados con éxito!
+            *Usuario:* ${{ github.actor }}
+            *Mensaje del commit:* ${{ github.event.head_commit.message }}
+          status: ${{ job.status }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_DEPLOYS }}
+
+  notificar_slack_fallo_cypress:
+    name: Notificar al Slack que salio mal
+    runs-on: ubuntu-latest
+    needs: test_deploy
+    if: failure()
+    steps:
+      - name: Notificar al Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          text: >
+            :no_entry: No se lograron pasar los test del deploy.
+            *Usuario:* ${{ github.actor }}
+            *Mensaje del commit:* ${{ github.event.head_commit.message }}
+          status: ${{ job.status }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_DEPLOYS }}

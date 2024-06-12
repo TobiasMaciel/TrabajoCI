@@ -175,11 +175,8 @@ jobs:
       - name: Notificar al Slack
         uses: 8398a7/action-slack@v3
         with:
-          text: >
-            :white_check_mark: Test del deploy pasados con éxito!
-            *Usuario:* ${{ github.actor }}
-            *Mensaje del commit:* ${{ github.event.head_commit.message }}
-          status: ${{ job.status }}
+          status: success
+          text: ":white_check_mark: Test del deploy pasados con éxito! "
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_DEPLOYS }}
 
@@ -192,10 +189,7 @@ jobs:
       - name: Notificar al Slack
         uses: 8398a7/action-slack@v3
         with:
-          text: >
-            :no_entry: No se lograron pasar los test del deploy.
-            *Usuario:* ${{ github.actor }}
-            *Mensaje del commit:* ${{ github.event.head_commit.message }}
-          status: ${{ job.status }}
+          status: failure
+          text: ":no_entry: No se lograron pasar los test del deploy."
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_DEPLOYS }}

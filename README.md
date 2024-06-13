@@ -14,6 +14,9 @@ Este proyecto implementa un pipeline de integración continua utilizando **GitHu
 - **Jira**: Gestión de proyectos
 - **Slack**: Notificaciones y comunicación en equipo
 
+![Herramientas utilizadas](https://github.com/TobiasMaciel/TrabajoCI/assets/128498660/9d83de84-c8ea-4bd7-83ef-1f8ae0747d50)
+
+
 ## 🏃‍♂️ Cómo Ejecutar el Proyecto
 
 Sigue estos pasos para clonar y ejecutar el proyecto en tu entorno local:

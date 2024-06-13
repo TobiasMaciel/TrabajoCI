@@ -3,10 +3,10 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - main
+      - '**' # Es pora que se ejecute en todas las ramas
   pull_request:
     branches:
-      - main
+      - '**' # Es pora que se ejecute en todas las ramas
 
 jobs:
   lint:
@@ -102,7 +102,7 @@ jobs:
     name: Iniciar el despligue en Render
     runs-on: ubuntu-latest
     needs: test
-    if: success()
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
     steps:
       - name: Desplegar en Render
         run: |
@@ -124,7 +124,7 @@ jobs:
     name: Despliegue en proceso
     runs-on: ubuntu-latest
     needs: start_deploy_render
-    if: success()
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
     steps:
       - name: Despliegue en proceso
         run:  |
@@ -151,6 +151,7 @@ jobs:
     name: Testear el deploy
     runs-on: ubuntu-latest
     needs: deploy_in_process
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -170,7 +171,7 @@ jobs:
     name: Notificar a Slack que salió bien
     runs-on: ubuntu-latest
     needs: test_deploy
-    if: success()
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
     steps:
       - name: Notificar a Slack
         run: |
@@ -182,7 +183,7 @@ jobs:
     name: Notificar a Slack que salió mal
     runs-on: ubuntu-latest
     needs: test_deploy
-    if: failure()  # Ejecuta solo si el despliegue falla
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && failure()
     steps:
       - name: Notificar al Slack
         run: |

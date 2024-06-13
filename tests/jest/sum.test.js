@@ -15,7 +15,3 @@ test("Suma de numero negativo y positivo -1 + 2 = 1", () => {
 test("Suma de un solo numero", () => {
   expect(sum(1)).toBe("Se deben ingresar números.");
 });
-
-/* test("Suma de numeros decimales", () => {
-  expect(sum(2.5,1)).toBe(3.7);
-}); */

@@ -1,6 +1,6 @@
 function sum(a, b) {
   if (!isNaN(a) && !isNaN(b)) {
-    return a + b;
+    return (a + b)*2;
   } else {
     return "Se deben ingresar números.";
   }

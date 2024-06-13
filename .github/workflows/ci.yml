@@ -3,7 +3,7 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - '**' # Es pora que se ejecute en todas las ramas
+      - main # Es pora que se ejecute en main
   pull_request:
     branches:
       - '**' # Es pora que se ejecute en todas las ramas

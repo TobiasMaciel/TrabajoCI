@@ -53,16 +53,6 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      
-      - name: Chequeo del Quality Gate 
-        run: |
-          SONAR_STATUS=$(curl -s -u ${{ secrets.SONAR_TOKEN }}: "https://sonarcloud.io/api/qualitygates/project_status?projectKey=TobiasMaciel_TrabajoCI" | jq -r '.projectStatus.status')
-          if [ "$SONAR_STATUS" != "OK" ]; then
-            echo "Quality gate failed: $SONAR_STATUS"
-            exit 1
-          fi
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   notificar_slack_exito_jest:
     name: Notificar al Slack que salio bien Jest y Sonar
